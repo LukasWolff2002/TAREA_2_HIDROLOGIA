@@ -90,7 +90,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\raisebox{0.20cm}{\textbf{Métodos Computacionales en Obras Civiles}}}
+\fancyhead[L]{\raisebox{0.20cm}{\textbf{Hidrología}}}
 \fancyhead[R]{\raisebox{0.1cm}{\includegraphics[width=0.25\linewidth]{LOGO_UNIVERSIDAD.jpg}}}
 \fancyhead[C]{\rule{\textwidth}{0.6pt}}
 \fancyfoot[C]{\rule{\textwidth}{0.6pt}}
@@ -125,8 +125,8 @@
 %	SECCION DEL TITULO
 %----------------------------------------------------------------------------------------
 \HRule \\[0.4cm]
-{ \huge \bfseries Entrega 0, Proyecto 1}\\[0.4cm] % Titulo del documento
-{ \huge \bfseries Metodos Computacionales en OOCC, IOC 4201}\\[0.4cm] % Titulo del documento
+{ \huge \bfseries Tarea 2}\\[0.4cm] % Titulo del documento
+{ \huge \bfseries Hidrología}\\[0.4cm] % Titulo del documento
 \HRule \\[1.5cm]
  \vspace{5cm}
 %----------------------------------------------------------------------------------------
@@ -134,13 +134,13 @@
 %----------------------------------------------------------------------------------------
 \begin{flushright}
     { \textbf{Profesor:}\\
-    Patricio Moreno\\
-    \vspace{0.2cm}
-    \textbf{Ayudante:} \\
-    Maximiliano Biasi\\
+    Ricardo González \\
     \vspace{0.2cm}
     \textbf{Alumno:} \\
-    Lukas Wolff Casanova\\
+    Bernardo Caprile \\
+    Pedro Valenzuela \\
+    Felipe Vicencio \\
+    Lukas Wolff \\
 }
 \end{flushright}
 \vspace{1cm}
@@ -159,19 +159,89 @@
 \thispagestyle{empty} % Deshabilita el número de página en la página del índice
 \newpage
 
-\newpage
-\thispagestyle{empty}
-\listoffigures 
-\thispagestyle{plain} % Deshabilita el encabezado en la página del índice %
-\thispagestyle{empty}
-\newpage
 %----------------------------------------------------------------------------------------
 %ACÁ EMPIEZA EL INFORME
 \setcounter{page}{1}
 %----------------------------------------------------------------------------------------
+\section{Introducción}
+Este informe busca presentar los resultados de dos preguntas sobre las precipitaciones de ciertas zonas. En la primera pregunta, se calculara cuanta agua puede caer en una columna de aire y se observara como esta cambia si la temperatura aumenta. 
 
+Luego la segunda pregunta corresponde a un analisis de las lluvias registradas en San José de Maipo, donde se utilizaran datos historicos y predicciones futuras para entender como el cambio climatico afecta las precipitaciones máximas de la zona. 
 
 \newpage
-\bibliography{referencias}  % Nombre del archivo .bib
+\section{Resultados}
+
+\subsection{Pregunta 1}
+Para calcular cuanta agua puede caer en una columna de aire, se debe calcular la cantidad de agua que hay en el aire en un momento dado. Para esto se utiliza la ecuación de Clausius-Clapeyron, que relaciona la presión de vapor de agua con la temperatura. \\
+La ecuación de Clausius-Clapeyron es la siguiente:
+
+\begin{equation}
+    \frac{dp}{dT} = \frac{L}{R_vT^2}
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $dp/dT$ es la tasa de cambio de la presión de vapor con respecto a la temperatura
+    \item $L$ es el calor latente de vaporización
+    \item $R_v$ es la constante de los gases para el vapor de agua
+    \item $T$ es la temperatura
+\end{itemize}
+
+\vspace{1.5cm}
+
+De lo cual, se obtuvieron los siguientes resultados:
+
+\begin{itemize}
+    \item En el caso de agua precipitable total historica, se obtuvo un valor de 96.200,25 mm 
+    \item En el caso de agua precipitable total futura, se obtuvo un valor de 98.220,22 mm
+\end{itemize}
+Esto se considero para un area de 1 m$^2$ y una altura de 10 km, ademas, de un aumento de temperatura de 2°C. \\
+Lo que significo un cambio porcentual del 2.1\% entre los valores historicos y futuros.
+
+\newpage
+\subsection{Pregunta 2}
+
+En esta pregunta se analizaran las precipitaciones máximas diarias en la estación de San José de Maipo, comparando los datos históricos (1990-2021) con las proyecciones futuras (2040-2069) bajo el impacto del cambio climático.
+
+Para esto, utilizando el metodo de Weibull se asignara una probabilidades de excedencia de: 
+
+\begin{equation}
+  P_{\text{exc}} = \frac{m}{N + 1}
+  \end{equation}
+  
+  Donde:
+  \begin{itemize}
+      \item $m$: Número de orden de mayor a menor.
+      \item $N$: Número total de datos.
+  \end{itemize}
+
+\subsubsection{Parte A}
+
+A continuacion se muestra un grafico de las precipitaciones máximas diarias en la estación de San José de Maipo, con los datos históricos desde 1990 hasta 2021.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{grafico.jpg}
+    \caption{Precipitaciones máximas diarias historicas en la estación de San José de Maipo}
+    \label{fig:precipitaciones_maximas_diarias}
+\end{figure}
+
+\newpage
+\subsubsection{Parte B}
+
+Luego se muestra un grafico con las precipitaciones máximas diarias en la estación de San José de Maipo, con las proyecciones futuras para el año 2040 hasta 2069.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{grafico_b.jpg}
+    \caption{Precipitaciones máximas diarias proyectadas a futuro en la estación de San José de Maipo}
+    \label{fig:precipitaciones_maximas_diarias}
+\end{figure}
+
+
+\subsubsection{Parte C}
+
+
+
 
 \end{document}
