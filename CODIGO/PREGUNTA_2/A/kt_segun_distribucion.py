@@ -26,12 +26,16 @@ df_probabilidad_exc['Kt Pearson III'] = (df_probabilidad_exc['MAXIMA EN 24 HS. P
 #Para una distribucion Gumbel
 mu = np.mean(df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'])  # Esto es una simplificación
 beta = np.std(df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'], ddof=1) * np.sqrt(6) / np.pi
-# Constante de Euler-Mascheroni
-gamma = 0.57721566490153286060
-# Calcular la media y la desviación estándar de la distribución de Gumbel
-media_gumbel = mu + gamma * beta
-desviacion_std_gumbel = np.pi * beta / np.sqrt(6)
+
+#Considero n = 30 años, por lo tanto
+n = 30
+yn = 0.5362
+sigman = 1.1124
+T = 1/(df_probabilidad_exc['Probabilidad_Excedencia']/100)
+yt = -np.log(-np.log((T-1)/T))
 # Calcular el coeficiente Kt para la distribución Gumbel
-df_probabilidad_exc['Kt Gumbel'] = (df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'] - media_gumbel) / desviacion_std_gumbel
+df_probabilidad_exc['Kt Gumbel'] = (yt - yn) / sigman
 
 df = df_probabilidad_exc
+
+print(df)
