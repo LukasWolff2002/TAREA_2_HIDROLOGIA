@@ -1,10 +1,14 @@
 from probabilidad_exc import df_probabilidad_exc
 import numpy as np
 
+
 #Para distribucion Normal
-media = df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'].mean()
-desviacion_std = df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'].std()
-df_probabilidad_exc['Kt Normal'] = (df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'] - media) / desviacion_std
+#primero debo calcular w
+w = (np.log(1/(df_probabilidad_exc['Probabilidad_Excedencia']/100)))**0.5
+#Ahora calculo el valor de z
+z = w - (2.515517 + 0.802853*w + 0.010328 * (w**2))/(1 + 1.432788 * w + 0.189269 * (w**2) + 0.001308 * (w**3))
+#Luego simplemente kt es igual a z
+df_probabilidad_exc['Kt Normal'] = z
 
 #para distribucion Log-Normal
 df_probabilidad_exc['Log de Precipitación'] = np.log(df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'])
