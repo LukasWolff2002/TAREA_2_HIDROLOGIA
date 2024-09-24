@@ -15,13 +15,20 @@ df_probabilidad_exc.drop('Log de Precipitación', axis=1, inplace=True)
 
 #Para una dsitribucion Person III
 # Parámetros estimados de la distribución gamma
-alpha = 2.5  # Parámetro de forma (similares a los de una Pearson Type II)
-beta = 2     # Parámetro de escala
 
-# Calcular la media y la desviación estándar de la distribución gamma
-media = alpha * beta
-desviacion_std = np.sqrt(alpha * beta**2)
-df_probabilidad_exc['Kt Pearson III'] = (df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'] - media) / desviacion_std
+df_probabilidad_exc['W Pearson'] = (np.log(1/(df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'])**2))**0.5
+W=df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)']
+df_probabilidad_exc["Z Pearson"] = W - (2.516 +0.803*W+0.0103*W**2)/(1+1.432*W+0.189*W**2+0.001308*W**3)
+Z= df_probabilidad_exc["Z Pearson"]
+media= df_probabilidad_exc["MAXIMA EN 24 HS. PRECIPITACION (mm)"].mean()
+desviacion_std = df_probabilidad_exc["MAXIMA EN 24 HS. PRECIPITACION (mm)"].std()
+mediana = df_probabilidad_exc["MAXIMA EN 24 HS. PRECIPITACION (mm)"].median()
+Cs= 3*(media -mediana)/desviacion_std
+K= Cs/6
+df_probabilidad_exc["Kt Pearson"] = Z +(Z**2-1)*K + (Z**3-6*Z)*(K**2)/3 - (Z**2-1)*K**3+Z*K**4+K**5/3
+print(df_probabilidad_exc["Kt Pearson"])
+
+
 
 #Para una distribucion Gumbel
 mu = np.mean(df_probabilidad_exc['MAXIMA EN 24 HS. PRECIPITACION (mm)'])  # Esto es una simplificación
