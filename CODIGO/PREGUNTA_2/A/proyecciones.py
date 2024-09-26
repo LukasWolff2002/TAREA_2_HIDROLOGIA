@@ -44,7 +44,7 @@ def Kt_log_normal (T):
     w = (np.log(1/(P_exc)))**0.5
     w = np.log(w)
     #Ahora calculo el valor de z
-    Z = -w + (2.515517 + 0.802853*w + 0.010328 * (w**2))/(1 + 1.432788 * w + 0.189269 * (w**2) + 0.001308 * (w**3))
+    Z = - w + (2.515517 + 0.802853*w + 0.010328 * (w**2))/(1 + 1.432788 * w + 0.189269 * (w**2) + 0.001308 * (w**3))
     #Por lo tanto, el valor de Kt para T = 50 es
     return Z
 
@@ -110,7 +110,7 @@ print('')
 
 def precipitacion (k,n,b):
     if k < 0:
-        return b - k*n
+        return b + k*n
     else:
         return b +k*n
 
@@ -162,14 +162,63 @@ print(f'{precipitacion_pearson_200=}')
 print(f'{precipitacion_gumbel_200=}')
 print('')
 
+#Grafiquemos las proyecciones
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(19.2, 10.8))  # Tamaño en pulgadas que corresponde a 1920x1080 píxeles
+plt.rcParams.update({'font.size': 16})  # Ajusta el tamaño base de la fuente
+plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.09)
+
+def graficar_columnas(df, columna_x, columna_y, color):
+    plt.plot(df[columna_y], df[columna_x], linestyle='-', color=color)
+
+def agregar_punto(x, y, tamaño, color, etiqueta=None):
+
+    plt.scatter(x, y, s=tamaño, c=color, label=etiqueta)
+
+    
+#Ahora grafico
+graficar_columnas(df_normal, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Normal Interpolado', 'red')
+graficar_columnas(df_log_normal, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Log-Normal Interpolado', 'green')
+graficar_columnas(df_pearson, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Pearson III Interpolado', 'blue')
+graficar_columnas(df_gumbel, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Gumbel Interpolado', 'black')
+
+#Agrego los puntos de las proyecciones
+agregar_punto(Kt_10_Normal,precipitacion_normal_10, 100, 'red', 'Normal 10 años')
+agregar_punto(Kt_10_Log_Normal,precipitacion_log_normal_10, 100, 'green', 'Log-Normal 10 años')
+agregar_punto(Kt_10_Pearson,precipitacion_pearson_10, 100, 'blue', 'Pearson III 10 años')
+agregar_punto(Kt_10_gumbel,precipitacion_gumbel_10, 100, 'black', 'Gumbel 10 años')
+
+agregar_punto(Kt_50_Normal,precipitacion_normal_50, 200, 'red', 'Normal 50 años')
+agregar_punto(Kt_50_Log_Normal,precipitacion_log_normal_50, 200, 'green', 'Log-Normal 50 años')
+agregar_punto(Kt_50_Pearson,precipitacion_pearson_50, 200, 'blue', 'Pearson III 50 años')
+agregar_punto(Kt_50_gumbel,precipitacion_gumbel_50, 200, 'black', 'Gumbel 50 años')
+
+agregar_punto(Kt_100_Normal,precipitacion_normal_100, 300, 'red', 'Normal 100 años')
+agregar_punto(Kt_100_Log_Normal,precipitacion_log_normal_100, 300, 'green', 'Log-Normal 100 años')
+agregar_punto(Kt_100_Pearson,precipitacion_pearson_100, 300, 'blue', 'Pearson III 100 años')
+agregar_punto(Kt_100_gumbel,precipitacion_gumbel_100, 300, 'black', 'Gumbel 100 años')
+
+agregar_punto(Kt_200_Normal,precipitacion_normal_200, 400, 'red', 'Normal 200 años')
+agregar_punto(Kt_200_Log_Normal,precipitacion_log_normal_200, 400, 'green', 'Log-Normal 200 años')
+agregar_punto(Kt_200_Pearson,precipitacion_pearson_200, 400, 'blue', 'Pearson III 200 años')
+agregar_punto(Kt_200_gumbel,precipitacion_gumbel_200, 400, 'black', 'Gumbel 200 años')
+
+
+#Finalmente guardo el grafico como una imagen JPG con la resolución deseada
+# Título del gráfico 
+plt.title(f'Gráfico de',fontsize=25)
+plt.legend(['Normal Interpolada', 'Log-Normal Interpolada', 'Pearson III Interpolada', 'Gumbel Interpolada'], fontsize=18)
+
+# Etiquetas de los ejes
+plt.ylabel("Precipitacion", fontsize=18)
+plt.xlabel("Frecuencia segun distribucion", fontsize=18)
+
+# Guardar el gráfico como una imagen JPG con la resolución deseada
+plt.savefig('grafico_proyecciones.jpg', format='jpg', dpi=100)
+
+# Cerrar la figura para liberar memoria
+plt.close()
 
 
 
-
-
-
-
-
-#Aqui ajusto la recta
-n_normal = -(eje_y[10]-eje_y[11])/(df_normal['Normal Interpolado'][10]-df_normal['Normal Interpolado'][11])
-#Por lo tanto, la precipitacion a los 50 años con normal va a ser
