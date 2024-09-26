@@ -173,22 +173,44 @@ Luego la segunda pregunta corresponde a un analisis de las lluvias registradas e
 
 \subsection{Pregunta 1}
 Para calcular cuanta agua puede caer en una columna de aire, se debe calcular la cantidad de agua que hay en el aire en un momento dado. Para esto se utiliza la ecuación de Clausius-Clapeyron, que relaciona la presión de vapor de agua con la temperatura. \\
-La ecuación de Clausius-Clapeyron es la siguiente:
+
+\subsubsection{Marco Teórico}
+
+En este análisis se considera la temperatura inicial $T_0$ y la presión inicial $P_0$ a una altitud $z_0$. Se utilizan las siguientes ecuaciones para calcular la temperatura, la presión y el contenido de agua precipitable:
 
 \begin{equation}
-    \frac{dp}{dT} = \frac{L}{R_vT^2}
+T(z) = T_0 + \left( \frac{dT}{dz} \right) (z - z_0)
 \end{equation}
 
-Donde:
-\begin{itemize}
-    \item $dp/dT$ es la tasa de cambio de la presión de vapor con respecto a la temperatura
-    \item $L$ es el calor latente de vaporización
-    \item $R_v$ es la constante de los gases para el vapor de agua
-    \item $T$ es la temperatura
-\end{itemize}
+\begin{equation}
+P(z) = P_0 \cdot e^{-\frac{(z - z_0)}{H}}
+\end{equation}
 
-\vspace{1.5cm}
+donde $H$ se define como:
 
+\begin{equation}
+H = \frac{R \cdot T(z)}{g \cdot \left( \frac{dT}{dz} \right)}
+\end{equation}
+
+La presión de saturación del vapor de agua se determina mediante la ecuación de Clausius-Clapeyron:
+
+\begin{equation}
+e_s(T) = 611 \cdot e^{\left(\frac{17.27 \cdot T}{T + 237.3}\right)}
+\end{equation}
+
+El contenido de agua precipitable $w$ en un intervalo de altitud $dz$ se calcula usando:
+
+\begin{equation}
+w(z) = \frac{\varepsilon \cdot e_s(T(z))}{P(z) - e_s(T(z))} \cdot dz
+\end{equation}
+
+Para el cálculo del agua precipitable total (APP), se integra sobre la columna de altitud desde $z_0$ hasta $z_{\text{top}}$:
+
+\begin{equation}
+\text{APP} = \sum_{z=z_0}^{z_{\text{top}}} w(z) \cdot dz
+\end{equation}
+
+\subsubsection{Resultados}
 De lo cual, se obtuvieron los siguientes resultados:
 
 \begin{itemize}
@@ -203,43 +225,186 @@ Lo que significo un cambio porcentual del 2.1\% entre los valores historicos y f
 
 En esta pregunta se analizaran las precipitaciones máximas diarias en la estación de San José de Maipo, comparando los datos históricos (1990-2021) con las proyecciones futuras (2040-2069) bajo el impacto del cambio climático.
 
-Para esto, utilizando el metodo de Weibull se asignara una probabilidades de excedencia de: 
+\subsubsection{Marco Teórico}
+
+\subsubsection*{1. Distribución Normal}
+La fórmula para el coeficiente \( K_t \) de la distribución Normal se calcula a partir de la probabilidad de excedencia \( P \):
 
 \begin{equation}
-  P_{\text{exc}} = \frac{m}{N + 1}
-  \end{equation}
-  
-  Donde:
-  \begin{itemize}
-      \item $m$: Número de orden de mayor a menor.
-      \item $N$: Número total de datos.
-  \end{itemize}
+w = \sqrt{\ln\left(\frac{1}{P}\right)}
+\end{equation}
 
-\subsubsection{Parte A}
+Luego, se calcula el valor de \( Z \):
 
-A continuacion se muestra un grafico de las precipitaciones máximas diarias en la estación de San José de Maipo, con los datos históricos desde 1990 hasta 2021.
+\begin{equation}
+Z = -w + \frac{2.515517 + 0.802853w + 0.010328w^2}{1 + 1.432788w + 0.189269w^2 + 0.001308w^3}
+\end{equation}
+
+Finalmente, el coeficiente \( K_t \) para la distribución Normal es simplemente:
+
+\begin{equation}
+K_t = Z
+\end{equation}
+
+\subsubsection*{2. Distribución Log-Normal}
+Para la distribución Log-Normal, usamos el logaritmo de \( w \):
+
+\begin{equation}
+w' = \ln(w)
+\end{equation}
+
+Y de nuevo, el valor de \( Z \):
+
+\begin{equation}
+Z_{\text{log}} = -w' + \frac{2.515517 + 0.802853w' + 0.010328(w')^2}{1 + 1.432788w' + 0.189269(w')^2 + 0.001308(w')^3}
+\end{equation}
+
+El coeficiente \( K_t \) para la distribución Log-Normal es:
+
+\begin{equation}
+K_t = Z_{\text{log}}
+\end{equation}
+
+\subsubsection*{3. Distribución Pearson III}
+Para la distribución Pearson III, primero se calcula el coeficiente de asimetría \( C_s \):
+
+\begin{equation}
+C_s = \frac{3(\bar{X} - \text{Mediana})}{\sigma}
+\end{equation}
+
+Luego, calculamos:
+
+\begin{equation}
+K = \frac{C_s}{6}
+\end{equation}
+
+El coeficiente \( K_t \) para la distribución Pearson III se obtiene como:
+
+\begin{equation}
+K_t = Z + (Z^2 - 1)K + \frac{(Z^3 - 6Z)K^2}{3} - (Z^2 - 1)K^3 + ZK^4 + \frac{K^5}{3}
+\end{equation}
+
+\subsubsection*{4. Distribución Gumbel}
+Para la distribución Gumbel, se utiliza:
+
+\begin{equation}
+y_n = 0.5362, \quad \sigma_n = 1.1124
+\end{equation}
+
+El valor de \( y_t \) se calcula como:
+
+\begin{equation}
+y_t = -\ln\left(-\ln\left(\frac{T}{T - 1}\right)\right)
+\end{equation}
+
+El coeficiente \( K_t \) para la distribución Gumbel es:
+
+\begin{equation}
+K_t = \frac{y_t - y_n}{\sigma_n}
+\end{equation}
+
+\subsubsection{Resultados}
+
+\subsubsection*{Parte A}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{grafico.jpg}
-    \caption{Precipitaciones máximas diarias historicas en la estación de San José de Maipo}
-    \label{fig:precipitaciones_maximas_diarias}
+  \centering
+  \includegraphics[width=0.8\textwidth]{grafico.jpg}
+  \caption{}
+  \label{fig:grafico}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{grafico_interpolado.jpg}
+  \caption{}
+  \label{fig:grafico_interpolado}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{Valores de \( K_t \) para diferentes períodos de retorno}
+  \begin{tabular}{|c|c|c|c|c|}
+  \hline
+  \textbf{Período de Retorno (T)} & \textbf{Normal} & \textbf{Log-Normal} & \textbf{Pearson} & \textbf{Gumbel} \\ \hline
+  10 años  & 1.5455 & -3.2158 & 1.4692 & 1.5410 \\ \hline
+  50 años  & 2.0358 & 1.0396 & 1.8709 & 3.0257 \\ \hline
+  100 años & 2.1660 & 1.7478 & 1.9738 & 3.6533 \\ \hline
+  200 años & 2.2627 & 2.3380 & 2.0492 & 4.2787 \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Valores de precipitación (mm) para diferentes períodos de retorno}
+  \begin{tabular}{|c|c|c|c|c|}
+  \hline
+  \textbf{Período de Retorno (T)} & \textbf{Normal} & \textbf{Log-Normal} & \textbf{Pearson} & \textbf{Gumbel} \\ \hline
+  10 años  & 87.07 & 5.07 & 86.31 & 88.33 \\ \hline
+  50 años  & 100.51 & 54.88 & 98.00 & 116.24 \\ \hline
+  100 años & 104.08 & 63.17 & 101.00 & 128.04 \\ \hline
+  200 años & 106.73 & 70.08 & 103.19 & 139.80 \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{grafico_proyecciones.jpg}
+  \caption{}
+  \label{fig:grafico_preyecciones}
 \end{figure}
 
 \newpage
-\subsubsection{Parte B}
-
-Luego se muestra un grafico con las precipitaciones máximas diarias en la estación de San José de Maipo, con las proyecciones futuras para el año 2040 hasta 2069.
+\subsubsection*{Parte B}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{grafico_b.jpg}
-    \caption{Precipitaciones máximas diarias proyectadas a futuro en la estación de San José de Maipo}
-    \label{fig:precipitaciones_maximas_diarias}
+  \centering
+  \includegraphics[width=0.8\textwidth]{grafico_b.jpg}
+  \caption{}
+  \label{fig:grafico_b}
 \end{figure}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{grafico_b_interpolado.jpg}
+  \caption{}
+  \label{fig:grafico_b_interpolado}
+\end{figure}
 
-\subsubsection{Parte C}
+\begin{table}[H]
+  \centering
+  \caption{Valores de \( K_t \) para diferentes períodos de retorno esperados para 2040-2069}
+  \begin{tabular}{|c|c|c|c|c|}
+  \hline
+  \textbf{Período de Retorno (T)} & \textbf{Normal} & \textbf{Log-Normal} & \textbf{Pearson} & \textbf{Gumbel} \\ \hline
+  10 años  & 1.55 & -3.22 & 1.69 & 1.54 \\ \hline
+  50 años  & 2.04 & 1.04  & 2.40 & 3.03 \\ \hline
+  100 años & 2.17 & 1.75  & 2.60 & 3.65 \\ \hline
+  200 años & 2.26 & 2.34  & 2.76 & 4.28 \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Valores de precipitación (mm) para diferentes períodos de retorno esperados para 2040-2069}
+  \begin{tabular}{|c|c|c|c|c|}
+  \hline
+  \textbf{Período de Retorno (T)} & \textbf{Normal} & \textbf{Log-Normal} & \textbf{Pearson} & \textbf{Gumbel} \\ \hline
+  10 años  & 111.72 & 20.55 & 114.25 & 113.77 \\ \hline
+  50 años  & 128.93 & 70.28 & 137.24 & 150.47 \\ \hline
+  100 años & 133.50 & 78.56 & 143.73 & 165.99 \\ \hline
+  200 años & 136.90 & 85.46 & 148.67 & 181.45 \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{grafico_b_proyecciones.jpg}
+  \caption{}
+  \label{fig:grafico_b_preyecciones}
+\end{figure}
+
+\subsubsection*{Parte C}
 
 
 
