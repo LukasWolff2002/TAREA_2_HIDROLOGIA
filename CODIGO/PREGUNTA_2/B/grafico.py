@@ -7,7 +7,7 @@ plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.09)
 
 def graficar_columnas(df, columna_x, columna_y, color):
 
-    plt.plot(df[columna_x], df[columna_y], marker='o', linestyle='-', color=color)
+    plt.plot(df[columna_y], df[columna_x], marker='o', linestyle='-', color=color)
 
     
 
@@ -15,12 +15,12 @@ graficar_columnas(df, 'ACCESS1-0 [r1i1p1]', 'Kt Normal', 'red')
 graficar_columnas(df, 'ACCESS1-0 [r1i1p1]', 'Kt Log-Normal', 'green')
 graficar_columnas(df, 'ACCESS1-0 [r1i1p1]', 'Kt Pearson III', 'blue')
 graficar_columnas(df, 'ACCESS1-0 [r1i1p1]', 'Kt Gumbel', 'black')
-# Título del gráfico
+# Título del gráfico 
 plt.title(f'Gráfico de',fontsize=25)
 plt.legend(['Normal', 'Log-Normal', 'Pearson III', 'Gumbel'], fontsize=18)
 # Etiquetas de los ejes
-plt.xlabel("Precipitacion", fontsize=18)
-plt.ylabel("Frecuencia segun distribucion", fontsize=18)
+plt.ylabel("Precipitacion", fontsize=18)
+plt.xlabel("Frecuencia segun distribucion", fontsize=18)
 
 # Guardar el gráfico como una imagen JPG con la resolución deseada
 plt.savefig('grafico_b.jpg', format='jpg', dpi=100)

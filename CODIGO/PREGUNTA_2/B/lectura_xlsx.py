@@ -15,5 +15,3 @@ def leer_hoja_excel(archivo):
 archivo = 'DATOS/P_B.xlsx'
 
 df_precipitaciones = leer_hoja_excel(archivo)
-
-print(df_precipitaciones)

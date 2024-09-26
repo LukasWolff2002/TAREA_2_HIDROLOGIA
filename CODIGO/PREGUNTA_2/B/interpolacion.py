@@ -12,7 +12,7 @@ def graficar_columnas(df, columna_x, columna_y, color):
 
     plt.plot(df[columna_y], df[columna_x], marker='o', linestyle='-', color=color)
 
-eje_y = df['MAXIMA EN 24 HS. PRECIPITACION (mm)']
+eje_y = df['ACCESS1-0 [r1i1p1]']
 
 def linear_interpolation(eje_x, eje_y, x_new, nombre):
     # Calcular la pendiente (m) y la ordenada al origen (b) de la recta y = mx + b
@@ -22,16 +22,17 @@ def linear_interpolation(eje_x, eje_y, x_new, nombre):
     y_new = m * x_new + b
     
     # Crear un nuevo DataFrame con los resultados interpolados
-    df_interpolated = pd.DataFrame({nombre: x_new, 'MAXIMA EN 24 HS. PRECIPITACION (mm)': y_new})
+    df_interpolated = pd.DataFrame({nombre: x_new, 'ACCESS1-0 [r1i1p1]': y_new})
     
-    return df_interpolated
+    # Devolver el DataFrame, la pendiente y la ordenada al origen
+    return df_interpolated, m, b
 
 #primero hago la interpolacion de Normal
 eje_x = df['Kt Normal']
 # Puntos nuevos donde queremos interpolar
 x_new = np.linspace(min(eje_x), max(eje_x), num=100)
 # Llamar a la función de interpolación
-df_normal = linear_interpolation(eje_x, eje_y, x_new, 'Normal Interpolado')
+df_normal, pendiente_normal, intercepto_normal = linear_interpolation(eje_x, eje_y, x_new, 'Normal Interpolado')
 
 #ahora hago la interpolacion de log normal
 #Genero un pequeño ajuste para que no haya problemas con el logaritmo
@@ -52,27 +53,27 @@ eje_x = df['Kt Log-Normal']
 # Puntos nuevos donde queremos interpolar
 x_new = np.linspace(min(eje_x), max(eje_x), num=100)
 # Llamar a la función de interpolación
-df_log_normal = linear_interpolation(eje_x, eje_y, x_new, 'Log-Normal Interpolado')
+df_log_normal, pendiente_log_normal, intercepto_log_normal = linear_interpolation(eje_x, eje_y, x_new, 'Log-Normal Interpolado')
 
 #ahora hago la interpolacion de Pearson III
 eje_x = df['Kt Pearson III']
 # Puntos nuevos donde queremos interpolar
 x_new = np.linspace(min(eje_x), max(eje_x), num=100)
 # Llamar a la función de interpolación
-df_pearson = linear_interpolation(eje_x, eje_y, x_new, 'Pearson III Interpolado')
+df_pearson, pendiente_pearson, intercepto_pearson = linear_interpolation(eje_x, eje_y, x_new, 'Pearson III Interpolado')
 
 #ahora hago la interpolacion de Gumbel
 eje_x = df['Kt Gumbel']
 # Puntos nuevos donde queremos interpolar
 x_new = np.linspace(min(eje_x), max(eje_x), num=100)
 # Llamar a la función de interpolación
-df_gumbel = linear_interpolation(eje_x, eje_y, x_new, 'Gumbel Interpolado')
+df_gumbel, pendiente_gumbel, intercepto_gumbel = linear_interpolation(eje_x, eje_y, x_new, 'Gumbel Interpolado')
 
 #Ahora grafico
-graficar_columnas(df_normal, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Normal Interpolado', 'red')
-graficar_columnas(df_log_normal, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Log-Normal Interpolado', 'green')
-graficar_columnas(df_pearson, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Pearson III Interpolado', 'blue')
-graficar_columnas(df_gumbel, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Gumbel Interpolado', 'black')
+graficar_columnas(df_normal, 'ACCESS1-0 [r1i1p1]', 'Normal Interpolado', 'red')
+graficar_columnas(df_log_normal, 'ACCESS1-0 [r1i1p1]', 'Log-Normal Interpolado', 'green')
+graficar_columnas(df_pearson, 'ACCESS1-0 [r1i1p1]', 'Pearson III Interpolado', 'blue')
+graficar_columnas(df_gumbel, 'ACCESS1-0 [r1i1p1]', 'Gumbel Interpolado', 'black')
 
 
 #Finalmente guardo el grafico como una imagen JPG con la resolución deseada
@@ -84,9 +85,10 @@ plt.ylabel("Precipitacion", fontsize=18)
 plt.xlabel("Frecuencia segun distribucion", fontsize=18)
 
 # Guardar el gráfico como una imagen JPG con la resolución deseada
-plt.savefig('grafico_interpolado.jpg', format='jpg', dpi=100)
+plt.savefig('grafico_b_interpolado.jpg', format='jpg', dpi=100)
 
 # Cerrar la figura para liberar memoria
 plt.close()
+
 
 

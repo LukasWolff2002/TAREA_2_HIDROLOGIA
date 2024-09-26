@@ -55,6 +55,4 @@ df_probabilidad_exc['Kt Gumbel'] = (yt - yn) / sigman
 
 df = df_probabilidad_exc
 
-print(1/(df['Probabilidad_Excedencia']/100))
-print(df['MAXIMA EN 24 HS. PRECIPITACION (mm)'])
 
