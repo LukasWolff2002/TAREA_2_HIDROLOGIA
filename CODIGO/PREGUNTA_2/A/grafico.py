@@ -16,7 +16,7 @@ graficar_columnas(df, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Kt Log-Normal', 'g
 graficar_columnas(df, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Kt Pearson III', 'blue')
 graficar_columnas(df, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Kt Gumbel', 'black')
 # Título del gráfico 
-plt.title(f'Gráfico de',fontsize=25)
+plt.title(f'Gráfico de Precipitacion vs Coeficiente de Frecuencia',fontsize=25)
 plt.legend(['Normal', 'Log-Normal', 'Pearson III', 'Gumbel'], fontsize=18)
 # Etiquetas de los ejes
 plt.ylabel("Precipitacion", fontsize=18)

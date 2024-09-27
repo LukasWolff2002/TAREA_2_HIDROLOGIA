@@ -78,7 +78,7 @@ graficar_columnas(df_gumbel, 'MAXIMA EN 24 HS. PRECIPITACION (mm)', 'Gumbel Inte
 
 #Finalmente guardo el grafico como una imagen JPG con la resolución deseada
 # Título del gráfico 
-plt.title(f'Gráfico de',fontsize=25)
+plt.title(f'Gráfico de Interpolaciones Lineales',fontsize=25)
 plt.legend(['Normal Interpolada', 'Log-Normal Interpolada', 'Pearson III Interpolada', 'Gumbel Interpolada'], fontsize=18)
 # Etiquetas de los ejes
 plt.ylabel("Precipitacion", fontsize=18)

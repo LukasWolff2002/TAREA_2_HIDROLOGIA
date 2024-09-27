@@ -207,7 +207,7 @@ agregar_punto(Kt_200_gumbel,precipitacion_gumbel_200, 400, 'black', 'Gumbel 200 
 
 #Finalmente guardo el grafico como una imagen JPG con la resolución deseada
 # Título del gráfico 
-plt.title(f'Gráfico de',fontsize=25)
+plt.title(f'Gráfico de Proyecciones',fontsize=25)
 plt.legend(['Normal Interpolada', 'Log-Normal Interpolada', 'Pearson III Interpolada', 'Gumbel Interpolada'], fontsize=18)
 
 # Etiquetas de los ejes

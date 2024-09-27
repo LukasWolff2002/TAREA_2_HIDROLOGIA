@@ -78,7 +78,7 @@ graficar_columnas(df_gumbel, 'ACCESS1-0 [r1i1p1]', 'Gumbel Interpolado', 'black'
 
 #Finalmente guardo el grafico como una imagen JPG con la resolución deseada
 # Título del gráfico 
-plt.title(f'Gráfico de',fontsize=25)
+plt.title(f'Gráfico de Interpolaciones Lineales',fontsize=25)
 plt.legend(['Normal Interpolada', 'Log-Normal Interpolada', 'Pearson III Interpolada', 'Gumbel Interpolada'], fontsize=18)
 # Etiquetas de los ejes
 plt.ylabel("Precipitacion", fontsize=18)

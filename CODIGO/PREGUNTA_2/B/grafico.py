@@ -16,7 +16,7 @@ graficar_columnas(df, 'ACCESS1-0 [r1i1p1]', 'Kt Log-Normal', 'green')
 graficar_columnas(df, 'ACCESS1-0 [r1i1p1]', 'Kt Pearson III', 'blue')
 graficar_columnas(df, 'ACCESS1-0 [r1i1p1]', 'Kt Gumbel', 'black')
 # Título del gráfico 
-plt.title(f'Gráfico de',fontsize=25)
+plt.title(f'Gráfico de Precipitacion vs Coeficiente de Frecuencia',fontsize=25)
 plt.legend(['Normal', 'Log-Normal', 'Pearson III', 'Gumbel'], fontsize=18)
 # Etiquetas de los ejes
 plt.ylabel("Precipitacion", fontsize=18)
